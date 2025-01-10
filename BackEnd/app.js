@@ -18,7 +18,14 @@ mongoose.connect(url).then(() => {
 })
 
 const userRoutes = require('./routes/userRoutes')
+app.get("/",(req,res,next)=>{
+    throw new Error("Something went wrong")
+    next();
+})
 
+app.use((err,req,res,next)=>{
+    res.status(500).send({error:err.message})
+})
 
 app.use('/user', userRoutes)
 
