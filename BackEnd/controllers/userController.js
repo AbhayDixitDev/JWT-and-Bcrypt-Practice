@@ -24,6 +24,8 @@ const userRegister=async(req,res)=>{
 }
 
 const userLogin=async(req,res)=>{
+    console.log(req.body);
+    
     const {email,password}=req.body
     let user=await User.findOne({email})
     if(!user){
@@ -35,7 +37,7 @@ const userLogin=async(req,res)=>{
     }
     const token = jwt.sign({email:user.email,name:user.name},process.env.JWT_SECRET)
     res.header("auth_token",token)
-    res.send("ok")
+    res.send({user:user})
 }
 
 const userLogout=async(req,res)=>{
